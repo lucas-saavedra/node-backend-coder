@@ -4,16 +4,12 @@ const contenedor = new Contenedor('productos.txt');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
-app.get('/productos', (req, res) => {
-    contenedor.getAll()
-        .then(result => res.send(result))
-        .catch(error => console.error(error))
+app.get('/productos', async (req, res) => {
+    res.json(await contenedor.getAll());
 });
 
-app.get('/productoRandom', (req, res) => {
-    contenedor.productoRandom()
-        .then(result => res.send(result))
-        .catch(error => console.error(error))
+app.get('/productoRandom', async (req, res) => {
+    res.json(await contenedor.productoRandom());
 });
 
 app.listen(PORT, () => {
