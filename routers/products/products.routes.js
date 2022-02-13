@@ -6,7 +6,7 @@ const productsList = new ProductsHandler(products);
 
 router.get('/', (req, res) => {
     const products = productsList.getAll();
-    res.json({ success: true, result: products })
+    res.json({ success: true, result: products });
 })
 
 router.get('/:id', (req, res) => {
@@ -14,7 +14,7 @@ router.get('/:id', (req, res) => {
     if (isNaN(id)) {
         return res.status(400).json({ error: 'Debe ingresar un numero' });
     }
-    foundedProduct = productsList.getById(id)
+    foundedProduct = productsList.getById(id);
     return res.json(
         foundedProduct ?
             { success: true, result: foundedProduct }
@@ -34,7 +34,7 @@ router.post('/', (req, res) => {
         return res.status(400).json({ error: 'Debe completar todos los campos' });
     } else {
         product.price = +price;
-        productAdded = productsList.addProduct(product)
+        productAdded = productsList.addProduct(product);
         return res.json({ success: true, result: productAdded });
     }
 
@@ -51,7 +51,7 @@ router.put('/:id', (req, res) => {
     if (!title || !price || !thumbnail) {
         return res.status(400).json({ error: 'Debe completar todos los campos' });
     } else {
-        isUpdatedProduct = productsList.updateProduct(title, +price, thumbnail, id)
+        isUpdatedProduct = productsList.updateProduct(title, +price, thumbnail, id);
         const { success, result, error, status } = isUpdatedProduct;
         if (success) {
             return res.json({ success, result });
