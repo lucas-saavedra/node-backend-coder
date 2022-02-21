@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { products } = require('../../data/data');
-const ProductsHandler = require('../../helpers/ProductsHandler');
+const ProductsHandler = require('../../models/products/products.api');
 const productsList = new ProductsHandler(products);
 
 router.get('/', (req, res) => {

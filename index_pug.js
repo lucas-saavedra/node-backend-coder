@@ -2,35 +2,17 @@ const express = require('express');
 const apiRoutes = require('./routers/index');
 const PORT = process.env.PORT || 8080;
 
-const { ProductsApi } = require('./models/index')
-const { products } = require('./data/data')
+const { ProductsApi } = require('./models/index');
+const { products } = require('./data/data');
 const productsApi = new ProductsApi([]);
-
-
-const { engine } = require('express-handlebars');
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-// ---------HBS ENGINE----------- //
-app.engine('handlebars', engine());
-// -------------------- //
 
-const arrPlantillas = ['handlebars', 'ejs', 'pug'];
-app.set('view engine', arrPlantillas[2]);
-
-//-----HBS-------//
-/* app.set('views', './views/hbs');
-app.get('/productos', (req, res) => {
-    productsData = productsApi.getAll();
-    res.render('body', {
-        products: productsData
-    });
-}); */
-
-//-----PUG-------//
+app.set('view engine', 'pug');
 app.set('views', './views/pug');
 app.get('/productos', (req, res) => {
     productsData = productsApi.getAll();
@@ -38,14 +20,6 @@ app.get('/productos', (req, res) => {
         products: productsData
     });
 });
-/*---------EJS--------------- */
-/* app.set('views', './views/ejs');
-app.get('/productos', (req, res) => {
-    productsData = productsApi.getAll();
-    res.render('index', {
-        products: productsData
-    });
-}); */
 
 app.post('/productos', (req, res) => {
     const product = { title, thumbnail, price } = req.body;
@@ -57,7 +31,6 @@ app.post('/productos', (req, res) => {
     const productAdded = productsApi.addProduct({ ...product, price: +price })
     res.redirect('/')
 })
-
 
 
 const connectedServer = app.listen(PORT, () => {

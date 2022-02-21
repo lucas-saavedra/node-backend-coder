@@ -21,7 +21,7 @@ const products = [
         id: 4,
         title: 'Paleta Pintura',
         price: 456.78,
-        thumbnail: 'https://www.botiga.com.uy/media/catalog/product/cache/1/thumbnail/600x600/0dc2d03fe217f8c83829496872af24a0/p/a/paleta_pintora_tempera_infantozzi_materiales.jpg'
+        thumbnail: "https://img.icons8.com/stickers/100/000000/paint-palette.png"
     },
     {
         id: 5,

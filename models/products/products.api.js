@@ -1,4 +1,4 @@
-class ProductsHandler {
+class ProductsApi {
     constructor(array) {
         this.productList = array;
     }
@@ -46,4 +46,4 @@ class ProductsHandler {
     }
 };
 
-module.exports = ProductsHandler;
+module.exports = ProductsApi;
