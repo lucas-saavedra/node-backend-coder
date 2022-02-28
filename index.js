@@ -1,41 +1,29 @@
-const express = require('express');
+const express = require('express')
+const moment = require('moment');
+const { Server: IOServer } = require('socket.io')
+const { Server: HttpServer } = require('http')
+const { MessagesContainer } = require('./helpers/MessagesContainer')
+
 const apiRoutes = require('./routers/index');
 const PORT = process.env.PORT || 8080;
 
-const { ProductsApi } = require('./models/index')
-const { products } = require('./data/data')
-const productsApi = new ProductsApi([]);
-
 const app = express();
+const httpServer = new HttpServer(app);
+const io = new IOServer(httpServer)
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-
-app.set('view engine', 'ejs');
-
-app.set('views', './views/ejs');
-app.get('/productos', (req, res) => {
-    productsData = productsApi.getAll();
-    res.render('index', {
-        products: productsData
-    });
-});
-
-app.post('/productos', (req, res) => {
-    const product = { title, thumbnail, price } = req.body;
-
-    if (isNaN(product.price)) { return res.status(400).json({ error: 'Price debe ser un numero' }); }
-    if (!title || !price || !thumbnail) {
-        return res.status(400).json({ error: 'Debe completar todos los campos' });
-    }
-    const productAdded = productsApi.addProduct({ ...product, price: +price })
-    res.redirect('/')
-})
+const { ProductsApi } = require('./models/index')
+const { productsData } = require('./data/data');
+const req = require('express/lib/request');
+const productsApi = new ProductsApi([]);
+const msgContainer = new MessagesContainer('chatList.txt')
 
 
-
-const connectedServer = app.listen(PORT, () => {
+const connectedServer = httpServer.listen(PORT, () => {
     console.log(`Listening at: ${PORT}`);
 });
 
@@ -43,3 +31,25 @@ connectedServer.on('error', (error) => {
     console.log('Error: ', error);
 })
 
+let messages = [];
+io.on('connection', (socket) => {
+    const products = productsApi.getAll();
+    socket.emit('products', products)
+    socket.on('newProduct', (data) => {
+        productsApi.addProduct(data);
+        const products = productsApi.getAll();
+        io.emit('products', products);
+    })
+    moment.locale('es-mx');
+    msgContainer.getAll()
+        .then(result => { socket.emit('messages', result) })
+        .catch(error => console.error(error))
+
+    socket.on('newMessage', async (data) => {
+        await msgContainer.save({ ...data, datetime: moment().format('LLLL') });
+        msgContainer.getAll()
+            .then(result => { io.emit('messages', result) })
+            .catch(error => console.error(error))
+    })
+
+})

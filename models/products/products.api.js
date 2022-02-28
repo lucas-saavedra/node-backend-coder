@@ -3,7 +3,7 @@ class ProductsApi {
         this.productList = array;
     }
     getAll() {
-        return this.productList;
+        return [...this.productList];
     }
     getById(id) {
         return this.productList.find(e => e.id === id);
