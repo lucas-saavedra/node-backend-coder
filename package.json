@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "\"# node-backend-coder\"",
   "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "start": "node index.js",
     "startDev": "nodemon index.js",

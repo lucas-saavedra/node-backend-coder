@@ -49,7 +49,43 @@ const products = [
     }
 ];
 
-
+const cartList = [
+    {
+        id: 1,
+        products: [
+            {
+                id: 7,
+                title: 'Escudo caballero templario',
+                price: 456.78,
+                url: 'https://www.tienda-medieval.com/blog/wp-content/uploads/2010/09/escudo_templario1.jpg'
+            },
+            {
+                id: 7,
+                title: 'Escudo caballero templario',
+                price: 456.78,
+                url: 'https://www.tienda-medieval.com/blog/wp-content/uploads/2010/09/escudo_templario1.jpg'
+            }
+        ],
+        timestamp: 1646308918809
+    },
+    {
+        id: 2,
+        products: [
+            {
+                id: 7,
+                title: '2',
+                price: 456.78,
+                url: 'https://www.tienda-medieval.com/blog/wp-content/uploads/2010/09/escudo_templario1.jpg'
+            },
+            {
+                id: 7,
+                title: '2',
+                price: 456.78,
+                url: 'https://www.tienda-medieval.com/blog/wp-content/uploads/2010/09/escudo_templario1.jpg'
+            }
+        ],
+        timestamp: 16463089198909
+    }]
 module.exports = {
-    products
+    products, cartList
 };
