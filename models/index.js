@@ -1,3 +1,4 @@
 module.exports = {
-    ProductsApi: require('./products/products.api')
+    ProductsApi: require('./products/products.api'),
+    MessagesApi: require('./messages/messages.api')
 }

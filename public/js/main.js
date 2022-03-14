@@ -1,12 +1,13 @@
 let socket = io('http://localhost:8080/');
-
 const submitMessage = (e) => {
   e.preventDefault();
   socket.emit('newMessage', {
     socketId: socket.id,
     email: document.getElementById('email').value,
     message: document.getElementById('message').value,
-  })
+  });
+  document.getElementById('email').value = '';
+  document.getElementById('message').value = '';
 }
 const submitProduct = (e) => {
   e.preventDefault();
@@ -14,7 +15,10 @@ const submitProduct = (e) => {
     title: document.getElementById('title').value,
     price: document.getElementById('price').value,
     thumbnail: document.getElementById('thumbnail').value
-  })
+  });
+  document.getElementById('title').value = '';
+  document.getElementById('price').value = '';
+  document.getElementById('thumbnail').value = '';
 }
 
 socket.on('products', (products) => {

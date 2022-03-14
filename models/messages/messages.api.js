@@ -1,5 +1,5 @@
 const knex = require('knex');
-class ProductsApi {
+class MessagesApi {
     constructor(config, tableName) {
         this.tableName = tableName;
         this.knex = knex(config);
@@ -9,16 +9,17 @@ class ProductsApi {
             if (!exists) {
                 return this.knex.schema.createTable(this.tableName, (t) => {
                     t.increments('id').primary();
-                    t.string('title', 256);
-                    t.float('price');
-                    t.text('thumbnail');
+                    t.text('socketId', 256);
+                    t.varchar('email', 256);
+                    t.varchar('message', 256);
+                    t.text('datetime');
                 });
             }
         });
     }
-    async getAll() {
+    getAll = async () => {
         try {
-            await this.createTableIfNotExists()
+            await this.createTableIfNotExists();
             const rows = await
                 this.knex(this.tableName)
                     .select('*');
@@ -28,17 +29,23 @@ class ProductsApi {
             return error.message;
         }
     }
-    async addProduct(product) {
+    addMessage = async (message) => {
         try {
-            const rows = await
-                this.knex(this.tableName)
-                    .insert({ ...product });
-            const result = Object.values(JSON.parse(JSON.stringify(rows)));
-            return result[0];
+            try {
+                const rows = await
+                    this.knex(this.tableName)
+                        .insert({ ...message });
+                const result = Object.values(JSON.parse(JSON.stringify(rows)));
+                return result[0];
+            } catch (error) {
+                return error.message;
+            }
         } catch (error) {
             return error.message;
         }
     }
-};
 
-module.exports = ProductsApi;
+}
+
+module.exports = MessagesApi;
+
