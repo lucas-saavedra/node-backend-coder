@@ -21,14 +21,22 @@ const submitProduct = (e) => {
   document.getElementById('thumbnail').value = '';
 }
 
-socket.on('products', (products) => {
-  fetch('http://localhost:8080/templates/productList.ejs')
-    .then(response => response.text())
-    .then(data => {
-      let html = ejs.render(data, { products });
-      document.getElementById('productList').innerHTML = html;
-    });
-})
+
+(async () => {
+  try {
+    const template = await fetch('http://localhost:8080/templates/productList.ejs');
+    const templateToTex = await template.text();
+    const productList = await fetch('http://localhost:8080/api/productos-test');
+    const { products } = await productList.json()
+    let html = ejs.render(templateToTex, { products });
+    document.getElementById('productList').innerHTML = html;
+  } catch (error) {
+    console.log(error.message);
+  }
+
+})()
+
+
 socket.on('messages', (messages) => {
   fetch('http://localhost:8080/templates/chatList.ejs')
     .then(response => response.text())
