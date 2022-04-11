@@ -1,26 +1,28 @@
 <% if (messages.length) { %>
+    <p>
+        Compresion de mensajes <%=compresion %>%
+    </p>
     <% messages.forEach(e=> { %>
-        <div class="<% if(id===e.id) { %>d-flex flex-row-reverse<% }%>">
-            <div
-                class=" p-2 text-dark bg-opacity-25 m-1 rounded col-11 <% if(id===e.socketId) { %> bg-success text-end<% }else{%> bg-secondary <% } %> > ">
-                <div class="py-1">
-                    <span class="card-text  fw-bold">
-                        <%= e.email %>
-                    </span>
-                    <span class="card-text"><small class="text-muted">
-                            <%= e.datetime %>
-                        </small></span>
-                </div>
-                <p>
-                    <%= e.message %>
-                </p>
+        <div class=" p-2 text-dark bg-opacity-25 m-1 rounded col-11  bg-success text-end  ">
+            <div class="py-1">
+                <p><img src="<%= e.author.avatar%>" class="img-fluid" alt="..."></p>
+                <span class="card-text  fw-bold">
+                    <%= e.author.alias %>
+                </span>
+                <span class="card-text"><small class="text-muted">
+                        <%= e.datetime %>
+                    </small></span>
             </div>
+            <span>
+                <%= e.text %>
+            </span>
         </div>
-        <% }) %>
-            <% }else{ %>
-                <div class="col-md-12">
-                    <div class="alert alert-primary" role="alert">
-                        <p>No se encontraron mensajes.</p>
-                    </div>
+        </div>
+
+        <% }) }else{ %>
+            <div class="col-md-12">
+                <div class="alert alert-primary" role="alert">
+                    <p>No se encontraron mensajes.</p>
                 </div>
-                <% }%>
+            </div>
+            <% }%>

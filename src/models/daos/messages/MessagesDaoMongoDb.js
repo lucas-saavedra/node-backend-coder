@@ -5,12 +5,15 @@ const mongoose = require("mongoose");
 const collection = 'messagess'
 const messagessSchema = new mongoose.Schema({
     author: {
+        id: String,
         nombre: String,
         edad: Number,
         alias: String,
-        avatar: String
+        avatar: String,
+        alias: String
     },
-    text: String
+    text: String,
+    datetime: String
 })
 class MessagessDaoMongoDb extends MongoContainer {
     constructor() {

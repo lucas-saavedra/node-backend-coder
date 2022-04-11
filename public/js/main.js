@@ -1,13 +1,22 @@
 let socket = io('http://localhost:8080/');
 const submitMessage = (e) => {
   e.preventDefault();
+  const author = {
+    id: document.getElementById('email').value,
+    nombre: document.getElementById('name').value,
+    apellido: document.getElementById('lastName').value,
+    edad: document.getElementById('age').value,
+    avatar: document.getElementById('avatar').value,
+    alias: document.getElementById('alias').value,
+  }
+  const message = document.getElementById('message').value;
+
   socket.emit('newMessage', {
     socketId: socket.id,
-    email: document.getElementById('email').value,
-    message: document.getElementById('message').value,
+    author,
+    text: message
   });
-  document.getElementById('email').value = '';
-  document.getElementById('message').value = '';
+
 }
 const submitProduct = (e) => {
   e.preventDefault();
@@ -36,12 +45,23 @@ const submitProduct = (e) => {
 
 })()
 
+const author = new normalizr.schema.Entity('author');
+const msg = new normalizr.schema.Entity('msg', {
+  author: author
+}, { idAttribute: '_id' });
 
+const msgs = new normalizr.schema.Entity('msgs', {
+  authors: [author],
+  messages: [msg]
+});
 socket.on('messages', (messages) => {
   fetch('http://localhost:8080/templates/chatList.ejs')
     .then(response => response.text())
     .then(data => {
-      let html = ejs.render(data, { messages, id: socket.id });
+
+      const messagesDeNorm = normalizr.denormalize(messages.result, msgs, messages.entities);
+      const compresion = (JSON.stringify(messagesDeNorm).length * 100) / JSON.stringify(messages).length;
+      let html = ejs.render(data, { messages: messagesDeNorm.messages, idSocket: socket.id, compresion: Math.round(100 - compresion) });
       document.getElementById('chatList').innerHTML = html;
     });
 
