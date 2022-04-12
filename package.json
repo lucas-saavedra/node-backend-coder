@@ -7,8 +7,8 @@
     "node": "16.x"
   },
   "scripts": {
-    "start": "node index.js",
-    "startDev": "nodemon index.js",
+    "start": "node src/index.js",
+    "startDev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
