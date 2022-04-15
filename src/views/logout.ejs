@@ -11,15 +11,10 @@
 </head>
 
 <body>
-
-  <h1>Bienvenido <%- sessionUser %>
-
+  <h1>Hasta luego <%- sessionUser %>
   </h1>
-  <button class="btn btn-secondary" onclick=logout()>Logout</button>
   <script>
-    function logout() {
-      window.location.href = '/logout';
-    };
+    setTimeout((() => window.location.href = '/'), 2000)
   </script>
 </body>
 
