@@ -3,7 +3,7 @@ const path = require('path');
 const users = [...require('./data/users.json')];
 const express = require('express');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
+const FileStore = require('session-file-store')(session);
 const auth = require('./middlewares/auth');
 
 
@@ -15,18 +15,17 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve("./public")));
-
-const MONGO_URI = "mongodb+srv://lucas_saavedra:Dino21%3F%3F@coderhouse-ecommerce.ys3rp.mongodb.net/coderhouse_ecommerce?retryWrites=true&w=majority"
-
 app.use(session({
   name: 'my-session',
   secret: 'top-secret-51',
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: MONGO_URI
-  })
-
+  store: new FileStore({
+    path: path.join(__dirname, './sessions'),
+    ttl: 300,
+    retries: 0
+  }
+  )
 }));
 
 // Template engines
@@ -36,7 +35,6 @@ app.set('view engine', 'ejs');
 // Routes
 app.get('/', async (req, res) => {
   const user = await req.session.user;
-  console.log(user);
   if (user) {
     return res.redirect('/profile');
   }
@@ -53,6 +51,7 @@ app.get('/profile', auth, async (req, res) => {
 
 app.get('/logout', auth, async (req, res) => {
   try {
+    await fs.writeFile('./src/data/users.json', JSON.stringify(users));
     req.session.destroy(err => {
       if (err) {
         console.log(err);
