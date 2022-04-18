@@ -1,9 +1,8 @@
-
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const MONGO_URI = require('./dbconfig');
 const auth = require('./middlewares/auth');
 
 const PORT = process.env.PORT || 8080;
@@ -18,7 +17,7 @@ app.use(express.static(path.resolve("./public")));
 
 app.use(session({
   name: 'my-session',
-  secret: 'secret_space_oddity',
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
   rolling: true,
@@ -26,7 +25,7 @@ app.use(session({
     maxAge: 600000
   },
   store: MongoStore.create({
-    mongoUrl: MONGO_URI
+    mongoUrl: process.env.MONGO_URI
   })
 
 }));
