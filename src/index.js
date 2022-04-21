@@ -1,9 +1,13 @@
-require('dotenv').config();
-const path = require('path');
-const express = require('express');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
-const auth = require('./middlewares/auth');
+import dotenv from 'dotenv'
+import express from 'express';
+import session from 'express-session';
+dotenv.config()
+import path from 'path';
+import MongoStore from 'connect-mongo';
+import dbConfig from './db/config.js'
+import passport from './middlewares/passport.js'
+import appRoutes from './routers/app.routes.js';
+import mongoose from 'mongoose';
 
 const PORT = process.env.PORT || 8080;
 
@@ -25,59 +29,28 @@ app.use(session({
     maxAge: 600000
   },
   store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI
+    mongoUrl: dbConfig.mongodb.connectTo('sessions')
   })
 
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Template engines
-app.set('views', __dirname + '/views');
+app.set('views', path.resolve('./src/views'));
 app.set('view engine', 'ejs');
 
 // Routes
-app.get('/', async (req, res) => {
-  const user = await req.session.user;
-  if (user) {
-    return res.redirect('/profile');
-  }
-  else {
-    return res.sendFile(path.resolve("./public", "login.html"));
-  }
-});
+app.use(appRoutes);
 
-app.get('/profile', auth, async (req, res) => {
-  const user = await req.session.user;
-  res.render('profile', { sessionUser: user });
-});
+app.listen(PORT, async () => {
 
-
-app.post('/login', async (req, res) => {
-  const { user } = req.body;
-  req.session.user = user;
-  req.session.save((err) => {
-    if (err) {
-      console.log(err);
-      res.redirect('/')
-    }
-    res.redirect('/profile');
-  })
-
-});
-app.get('/logout', async (req, res) => {
   try {
-    const user = await req.session.user;
-    req.session.destroy(err => {
-      if (err) { console.log(err); }
-      res.clearCookie('my-session');
-      res.render('logout', { sessionUser: user });
-    })
-
+    await mongoose.connect(dbConfig.mongodb.connectTo('users'))
+    console.log('Connected to DB!');
+    console.log('Server is up and running on port: ', +PORT);
+  } catch (error) {
+    console.log(error)
   }
-  catch (err) {
-    console.log(err);
-  }
-});
 
-app.listen(PORT, () => {
-  console.log('Server is up and running on port: ', PORT);
 });

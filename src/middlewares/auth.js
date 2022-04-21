@@ -1,5 +1,5 @@
 const auth = async (req, res, next) => {
-  if (req.session.user) {
+  if (req.isAuthenticated()) {
     next();
   }
   else {
@@ -7,4 +7,4 @@ const auth = async (req, res, next) => {
   }
 };
 
-module.exports = auth;
+export default auth;
