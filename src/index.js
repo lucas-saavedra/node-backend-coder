@@ -1,16 +1,14 @@
 import dotenv from 'dotenv'
 import express from 'express';
 import session from 'express-session';
-dotenv.config()
 import path from 'path';
 import MongoStore from 'connect-mongo';
 import dbConfig from './db/config.js'
 import passport from './middlewares/passport.js'
 import appRoutes from './routers/app.routes.js';
 import mongoose from 'mongoose';
-
-const PORT = process.env.PORT || 8080;
-
+import config from '../config.js';
+const PORT = config.PORT;
 const app = express();
 
 // Middlewares
