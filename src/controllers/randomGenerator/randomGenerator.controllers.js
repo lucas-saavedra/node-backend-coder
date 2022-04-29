@@ -3,7 +3,7 @@ import path from 'path';
 
 const randomGenerator = async (req, res, next) => {
     const forked = fork(path.resolve('src/controllers/randomGenerator', 'randomGeneratorChild.js'))
-    const cant = req.query?.cant || 500000000;
+    const cant = req.query?.cant || 100000000;
     forked.on('message', (data) => {
         if (data == 'ready') {
             forked.send(+cant)
@@ -14,4 +14,4 @@ const randomGenerator = async (req, res, next) => {
 
 };
 
-export default  randomGenerator 
+export default randomGenerator 
