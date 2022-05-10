@@ -17,8 +17,7 @@ passport.use('login', new Local.Strategy(async (username, password, done) => {
             return done(null, false);
         }
         if (!isValidPassword(user, password)) {
-            console.log('Invalid password');
-            return done(null, false);
+            return done(null, false, { msg: 'Invalid password' });
         }
         return done(null, user);
     } catch (error) {
@@ -33,7 +32,6 @@ passport.use('register', new Local.Strategy({
         try {
             const isUserRegistered = await User.getByEmail(username);
             if (isUserRegistered) {
-                console.log('User already exist');
                 return done(null, false);
             }
             const userObj = {

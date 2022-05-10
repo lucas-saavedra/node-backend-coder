@@ -5,6 +5,7 @@ import auth from '../middlewares/auth.js';
 import path from 'path';
 import errorRoutes from "./error/error.routes.js";
 import infoRoutes from "./info/info.routes.js";
+import { warningLogs } from '../middlewares/loggers.js';
 const router = express.Router();
 
 
@@ -36,7 +37,7 @@ router.get('/logout', auth, async (req, res) => {
 router.use('/info', infoRoutes)
 router.use('/api', apiRoutes);
 
-router.use('/', errorRoutes);
+router.use('/',warningLogs, errorRoutes);
 
 
 export default router;

@@ -9,6 +9,7 @@ import mongoose from 'mongoose';
 import config from '../config.js';
 import cluster from 'cluster';
 import os from 'os';
+import {consoleLogs, errorLogs} from './middlewares/loggers.js';
 
 const clusterMode = config.MODE === 'cluster';
 if (clusterMode && cluster.isPrimary) {
@@ -31,7 +32,8 @@ if (clusterMode && cluster.isPrimary) {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(express.static(path.resolve("./public")));
-
+  app.use(consoleLogs);
+  
   app.use(session({
     name: 'my-session',
     secret: process.env.SECRET,
@@ -55,6 +57,7 @@ if (clusterMode && cluster.isPrimary) {
 
   // Routes
   app.use(appRoutes);
+  app.use(errorLogs);
   app.listen(PORT, async () => {
     try {
       await mongoose.connect(dbConfig.mongodb.connectTo('users'))
