@@ -13,8 +13,7 @@ passport.use('login', new Local.Strategy(async (username, password, done) => {
     try {
         const user = await User.getByEmail(username);
         if (!user) {
-            console.log('User does not exists');
-            return done(null, false);
+            return done(null, false, { msg: 'User does not exists' });
         }
         if (!isValidPassword(user, password)) {
             return done(null, false, { msg: 'Invalid password' });
@@ -32,7 +31,7 @@ passport.use('register', new Local.Strategy({
         try {
             const isUserRegistered = await User.getByEmail(username);
             if (isUserRegistered) {
-                return done(null, false);
+                return done(null, false, { msg: 'User already registered' });
             }
             const userObj = {
                 name: req.body.name,

@@ -11,6 +11,7 @@ const info = async (req, res, next) => {
         memoryUsage: process.memoryUsage().rss,
         numCPUs: os.cpus().length
     }
+    //console.log(systemInfo);
     res.json(systemInfo)
 };
 

@@ -9,19 +9,20 @@ import mongoose from 'mongoose';
 import config from '../config.js';
 import cluster from 'cluster';
 import os from 'os';
-import {consoleLogs, errorLogs} from './middlewares/loggers.js';
+import { consoleLogs, errorLogs } from './middlewares/loggers.js';
+import { consoleLogger, errorFileLogger } from './logger/index.js';
 
 const clusterMode = config.MODE === 'cluster';
 if (clusterMode && cluster.isPrimary) {
   const CORE_NUMBERS = os.cpus().length;
-  console.log('Numero de procesadores => ', CORE_NUMBERS);
-  console.log('PID Proceso primario=> ', process.pid);
+  consoleLogger.info('Numero de procesadores => ', CORE_NUMBERS);
+  consoleLogger.info('PID Proceso primario=> ', process.pid);
   for (let i = 0; i < CORE_NUMBERS; i++) {
     cluster.fork();
-    console.log('PID Proceso worker=> ', process.pid);
+    consoleLogger.info('PID Proceso worker=> ', process.pid);
   }
   cluster.on('exit', (worker) => {
-    console.log('Worker', worker.process.pid, 'died');
+    consoleLogger.info('Worker', worker.process.pid, 'died');
     cluster.fork();
   })
 } else {
@@ -33,7 +34,7 @@ if (clusterMode && cluster.isPrimary) {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.static(path.resolve("./public")));
   app.use(consoleLogs);
-  
+
   app.use(session({
     name: 'my-session',
     secret: process.env.SECRET,
@@ -57,15 +58,17 @@ if (clusterMode && cluster.isPrimary) {
 
   // Routes
   app.use(appRoutes);
+
+  // Middleware errors
   app.use(errorLogs);
   app.listen(PORT, async () => {
     try {
       await mongoose.connect(dbConfig.mongodb.connectTo('users'))
-      console.log('Connected to DB!');
-      console.log('Server is up and running on port: ', +PORT);
+      consoleLogger.info('Connected to DB!');
+      consoleLogger.info('Server is up and running on port: ', +PORT);
     } catch (error) {
-      console.log(error)
+      errorFileLogger.error(error)
     }
-
   });
 }
+

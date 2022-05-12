@@ -1,65 +1,24 @@
-[2022-05-09T18:32:39.848] [ERROR] error - Test error
-[2022-05-09T18:34:23.675] [ERROR] error - Test error
-[2022-05-09T20:52:20.923] [ERROR] error - ReferenceError: next is not defined
-    at Strategy._verify (file:///Z:/Repositorios/node-backend-coder/src/middlewares/passport.js:36:17)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)
-[2022-05-09T21:37:15.522] [ERROR] error - TypeError: next is not a function
-    at Strategy._verify (file:///Z:/Repositorios/node-backend-coder/src/middlewares/passport.js:36:24)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)
-[2022-05-09T21:49:23.848] [ERROR] error - TypeError: next is not a function
-    at Strategy._verify (file:///Z:/Repositorios/node-backend-coder/src/middlewares/passport.js:36:24)
-    at runMicrotasks (<anonymous>)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)
-[2022-05-09T21:49:56.954] [ERROR] error - Error: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
-    at UserDaoMongoDb.getByEmail (file:///Z:/Repositorios/node-backend-coder/src/models/daos/usuarios/UsuariosDaoMongoDb.js:46:19)
-    at async Strategy._verify (file:///Z:/Repositorios/node-backend-coder/src/middlewares/passport.js:34:38)
-[2022-05-09T21:52:19.712] [ERROR] error - true
-[2022-05-09T21:53:36.536] [ERROR] error - { error: 'User already exists' }
-[2022-05-09T21:55:17.839] [ERROR] error - true
-[2022-05-09T22:02:24.006] [ERROR] error - TypeError: errorLogs.error is not a function
-    at Strategy._verify (file:///Z:/Repositorios/node-backend-coder/src/middlewares/passport.js:37:27)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)
-[2022-05-09T22:06:13.661] [ERROR] error - User already exists
-[2022-05-09T22:19:03.974] [ERROR] error - Error: Failed to serialize user into session
-    at pass (Z:\Repositorios\node-backend-coder\node_modules\passport\lib\authenticator.js:278:19)
-    at serialized (Z:\Repositorios\node-backend-coder\node_modules\passport\lib\authenticator.js:283:7)
-    at file:///Z:/Repositorios/node-backend-coder/src/middlewares/passport.js:54:5
-    at pass (Z:\Repositorios\node-backend-coder\node_modules\passport\lib\authenticator.js:291:9)
-    at Authenticator.serializeUser (Z:\Repositorios\node-backend-coder\node_modules\passport\lib\authenticator.js:296:5)
-    at SessionManager.logIn (Z:\Repositorios\node-backend-coder\node_modules\passport\lib\sessionmanager.js:14:8)
-    at IncomingMessage.req.login.req.logIn (Z:\Repositorios\node-backend-coder\node_modules\passport\lib\http\request.js:39:26)
-    at Strategy.strategy.success (Z:\Repositorios\node-backend-coder\node_modules\passport\lib\middleware\authenticate.js:256:13)
-    at verified (Z:\Repositorios\node-backend-coder\node_modules\passport-local\lib\strategy.js:83:10)
-    at Strategy._verify (file:///Z:/Repositorios/node-backend-coder/src/middlewares/passport.js:21:20)
-[2022-05-09T22:19:17.318] [ERROR] error - Error: Failed to serialize user into session
-    at pass (Z:\Repositorios\node-backend-coder\node_modules\passport\lib\authenticator.js:278:19)
-    at serialized (Z:\Repositorios\node-backend-coder\node_modules\passport\lib\authenticator.js:283:7)
-    at file:///Z:/Repositorios/node-backend-coder/src/middlewares/passport.js:54:5
-    at pass (Z:\Repositorios\node-backend-coder\node_modules\passport\lib\authenticator.js:291:9)
-    at Authenticator.serializeUser (Z:\Repositorios\node-backend-coder\node_modules\passport\lib\authenticator.js:296:5)
-    at SessionManager.logIn (Z:\Repositorios\node-backend-coder\node_modules\passport\lib\sessionmanager.js:14:8)
-    at IncomingMessage.req.login.req.logIn (Z:\Repositorios\node-backend-coder\node_modules\passport\lib\http\request.js:39:26)
-    at Strategy.strategy.success (Z:\Repositorios\node-backend-coder\node_modules\passport\lib\middleware\authenticate.js:256:13)
-    at verified (Z:\Repositorios\node-backend-coder\node_modules\passport-local\lib\strategy.js:83:10)
-    at Strategy._verify (file:///Z:/Repositorios/node-backend-coder/src/middlewares/passport.js:21:20)
-[2022-05-09T22:47:56.873] [ERROR] error - ReferenceError: Z:\Repositorios\node-backend-coder\src\views\login-error.ejs:20
-    18|                 <h1>Login error</h1>
-    19|                 <h3>
- >> 20|                     <% if(messages.error){ %>
-    21|                         <%= messages.error %>
-    22|                             <% } %>
-    23|                 </h3>
-
-messages is not defined
-    at eval ("Z:\\Repositorios\\node-backend-coder\\src\\views\\login-error.ejs":12:8)
-    at login-error (Z:\Repositorios\node-backend-coder\node_modules\ejs\lib\ejs.js:692:17)
-    at tryHandleCache (Z:\Repositorios\node-backend-coder\node_modules\ejs\lib\ejs.js:272:36)
-    at View.exports.renderFile [as engine] (Z:\Repositorios\node-backend-coder\node_modules\ejs\lib\ejs.js:489:10)
-    at View.render (Z:\Repositorios\node-backend-coder\node_modules\express\lib\view.js:135:8)
-    at tryRender (Z:\Repositorios\node-backend-coder\node_modules\express\lib\application.js:640:10)
-    at Function.render (Z:\Repositorios\node-backend-coder\node_modules\express\lib\application.js:592:3)
-    at ServerResponse.render (Z:\Repositorios\node-backend-coder\node_modules\express\lib\response.js:1017:7)
-    at file:///Z:/Repositorios/node-backend-coder/src/routers/error/error.routes.js:7:9
-    at Layer.handle [as handle_request] (Z:\Repositorios\node-backend-coder\node_modules\express\lib\router\layer.js:95:5) {
-  path: 'Z:\\Repositorios\\node-backend-coder\\src\\views\\login-error.ejs'
+[2022-05-12T09:24:24.553] [ERROR] error - MongoServerSelectionError: getaddrinfo ENOTFOUND coderhouse-ecommerce-shard-00-00.ys3rp.mongodb.net
+    at Timeout._onTimeout (Z:\Repositorios\node-backend-coder\node_modules\mongodb\lib\sdam\topology.js:318:38)
+    at listOnTimeout (node:internal/timers:559:17)
+    at processTimers (node:internal/timers:502:7) {
+  reason: TopologyDescription {
+    type: 'ReplicaSetNoPrimary',
+    servers: Map(3) {
+      'coderhouse-ecommerce-shard-00-00.ys3rp.mongodb.net:27017' => [ServerDescription],
+      'coderhouse-ecommerce-shard-00-02.ys3rp.mongodb.net:27017' => [ServerDescription],
+      'coderhouse-ecommerce-shard-00-01.ys3rp.mongodb.net:27017' => [ServerDescription]
+    },
+    stale: false,
+    compatible: true,
+    heartbeatFrequencyMS: 10000,
+    localThresholdMS: 15,
+    setName: 'atlas-myatyo-shard-0',
+    maxSetVersion: 8,
+    maxElectionId: new ObjectId("7fffffff000000000000007f"),
+    commonWireVersion: 13,
+    logicalSessionTimeoutMinutes: undefined
+  },
+  code: undefined,
+  [Symbol(errorLabels)]: Set(0) {}
 }
