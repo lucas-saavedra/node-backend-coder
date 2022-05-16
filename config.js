@@ -3,11 +3,9 @@ import yargs from 'yargs'
 dotenv.config();
 const args = yargs(process.argv.slice(2))
   .alias({
-    p: 'port',
     m: 'mode'
   })
   .default({
-    port: 8080,
     mode: "fork"
   })
   .argv;
@@ -17,12 +15,13 @@ const {
   SECRET
 } = process.env;
 
+const PORT = process.env.PORT || 8080;
+
 const {
-  port,
   mode
 } = args;
 export default {
-  PORT: port,
+  PORT: PORT,
   MODE: mode,
   DB_PASSWORD,
   SECRET,
