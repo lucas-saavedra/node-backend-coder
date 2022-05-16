@@ -2,7 +2,7 @@
   "name": "backend-coder",
   "version": "1.0.0",
   "description": "\"# node-backend-coder\"",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "engines": {
     "node": "16.x"
