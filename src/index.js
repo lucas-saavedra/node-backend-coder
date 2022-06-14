@@ -10,9 +10,9 @@ import config from '../config.js';
 import cluster from 'cluster';
 import os from 'os';
 import { consoleLogs, errorLogs } from './middlewares/loggers.js';
-import { consoleLogger, errorFileLogger } from './logger/index.js';
+import { consoleLogger, errorFileLogger } from './services/logger/index.js';
 
-const clusterMode = config.MODE === 'cluster';
+const clusterMode = config.MODE === 'fork';
 if (clusterMode && cluster.isPrimary) {
   const CORE_NUMBERS = os.cpus().length;
   consoleLogger.info('Numero de procesadores => ', CORE_NUMBERS);

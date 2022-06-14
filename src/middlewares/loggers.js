@@ -2,7 +2,7 @@ import {
     consoleLogger,
     warnFileLogger,
     errorFileLogger
-} from '../logger/index.js'
+} from '../services/logger/index.js'
 
 const consoleLogs = (req, res, next) => {
     consoleLogger.info(`[${req.method}]=> ${req.originalUrl} `);

@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
+let instance = null;
 class MongoContainer {
     constructor(collection, schema) {
         this.model = mongoose.model(collection, schema);
+
     }
     async getAll(filter = {}) {
         const documents = await this.model.find(filter, { __v: 0 }).lean();

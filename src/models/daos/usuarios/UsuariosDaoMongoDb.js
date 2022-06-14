@@ -19,6 +19,7 @@ const usersSchema = new mongoose.Schema({
     timestamp: { type: Date, min: Date.now() }
 
 })
+
 class UserDaoMongoDb extends MongoContainer {
     constructor() {
         super(collection, usersSchema);
