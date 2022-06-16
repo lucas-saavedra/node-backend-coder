@@ -1,8 +1,9 @@
+import CustomError from "../utils/errors/customError.js"
 class DbClient {
     async connect() {
-        throw new Error("falta implementar 'connect' en subclase!")
+        throw new CustomError(500, "falta implementar 'connect' en subclase!")
     }
     async disconnect() {
-        throw new Error("falta implementar 'disconnect' en subclase!")
+        throw new CustomError(500, "falta implementar 'disconnect' en subclase!")
     }
 } export default DbClient

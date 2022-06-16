@@ -2,14 +2,9 @@
   "name": "backend-coder",
   "version": "1.0.0",
   "description": "\"# node-backend-coder\"",
-  "main": "src/index.js",
   "type": "module",
-  "engines": {
-    "node": "16.x"
-  },
+  "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "startDev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,21 +19,10 @@
   },
   "homepage": "https://github.com/lucas-saavedra/node-backend-coder#readme",
   "dependencies": {
-    "autocannon": "^7.9.0",
-    "bcrypt": "^5.0.1",
-    "compression": "^1.7.4",
-    "connect-mongo": "^4.6.0",
-    "cookie-parser": "^1.4.6",
-    "dotenv": "^16.0.0",
-    "ejs": "^3.1.6",
-    "express": "^4.17.2",
-    "express-session": "^1.17.2",
-    "log4js": "^6.4.6",
-    "mongoose": "^6.3.0",
-    "passport": "^0.5.2",
-    "passport-local": "^1.0.0",
-    "session-file-store": "^1.5.0",
-    "socket.io": "^4.4.1",
-    "yargs": "^17.4.1"
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.8",
+    "yargs": "^17.5.1"
   }
 }

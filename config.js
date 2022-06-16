@@ -4,24 +4,30 @@ dotenv.config();
 const args = yargs(process.argv.slice(2))
   .alias({
     p: 'port',
-    m: 'mode'
+    m: 'mode',
+    pers:'persistencia'
   })
   .default({
     port: 8080,
-    mode: "fork"
+    persistencia: 'mem'
   })
   .argv;
 
 const {
   DB_PASSWORD,
-  SECRET
+  SECRET,
+
 } = process.env;
 
 const {
   port,
-  mode
+  mode,
+  persistencia
 } = args;
+
+
 export default {
+  persistencia,
   PORT: port,
   MODE: mode,
   DB_PASSWORD,

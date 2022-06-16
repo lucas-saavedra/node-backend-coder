@@ -1,10 +1,18 @@
-import mongoose from "mongoose";
-let instance = null;
-class MongoContainer {
-    constructor(collection, schema) {
-        this.model = mongoose.model(collection, schema);
 
+
+import ProductsDao from "./ProductsDao.js";
+import MongoClient from "../../../db/mongo/DBClientMongo.js";
+
+class ProductsDaoDb extends ProductsDao {
+    constructor(collection, schema) {
+        super();
+        this.client = new MongoClient();
+        (async () => {
+            this.connection = await this.client.connect();
+            this.model = this.connection.model(collection, schema);
+        })();
     }
+
     async getAll(filter = {}) {
         const documents = await this.model.find(filter, { __v: 0 }).lean();
         return documents;
@@ -20,7 +28,6 @@ class MongoContainer {
         const newDocument = await this.model.create(element);
         return newDocument;
     }
-
     async updateById(id, element) {
         const updatedDocument = await this.model.updateOne({ _id: id }, {
             $set: { ...element }
@@ -31,13 +38,14 @@ class MongoContainer {
         return updatedDocument;
     }
     async deleteById(id) {
-
         const deletedDocument = await this.model.deleteOne({ _id: id });
         if (!deletedDocument.deletedCount) {
             throw new Error('[NOT_FOUND] => The requested resource does not exist!');
         }
         return deletedDocument;
     }
-
+    exit() {
+        this.client.disconnect();
+    }
 }
-export default MongoContainer;
+export default ProductsDaoDb;

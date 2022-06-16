@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import config from "../config";
-import DbClient from "../DBClient";
+import CustomError from "../../utils/errors/customError.js";
+import connectToMongoDb from "../config.js";
+import DbClient from "../DBClient.js"
 let instance = null;
 class MongoClient extends DbClient {
     constructor() {
@@ -10,16 +11,12 @@ class MongoClient extends DbClient {
     }
     async connect() {
         try {
-            if (!this.connected) {
-                instance = await this.client.connect(config.mongodb.uri);
-                console.log('base de datos conectada');
-                this.connected = true;
-            } else {
-
-            }
-
+            instance = await this.client.connect(connectToMongoDb('users'));
+            this.connected = true;
+            console.log('Base de datos connectada, instancia: ', instance.connection.id);
+            return instance;
         } catch (error) {
-            throw new CustomError(500, 'error al conectarse a mongodb 1', error)
+            throw new CustomError(500, 'error al conectarse a mongodb', error)
         }
     }
     async disconnect() {
@@ -28,7 +25,9 @@ class MongoClient extends DbClient {
             console.log('base de datos desconectada')
             this.connected = false
         } catch (error) {
-            throw new CustomError(500, 'error al conectarse a mongodb 2', error)
+            throw new CustomError(500, 'error al desconectarse de mongodb', error)
         }
     }
 }
+
+export default MongoClient;
