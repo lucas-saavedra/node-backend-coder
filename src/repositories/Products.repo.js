@@ -1,4 +1,3 @@
-import axios from 'axios';
 import ProductoDTO from "../models/dtos/ProductoDto.js";
 import getDao from "../models/daos/productos/ProductsDaoFactory.js";
 
@@ -11,7 +10,6 @@ class Cotizador {
     getPrecioSegunMoneda(precio, moneda) {
         switch (moneda) {
             case 'USD_BLUE':
-
                 return precio * +this.dolarBlueValue;
             case 'USD_OFICIAL':
                 return precio * +this.dolarOficialValue;
@@ -29,6 +27,28 @@ class ProductsRepo {
         const products = await this.productsDao.getAll();
         return products;
     }
+    async getByIdRepo(id) {
+        const product = await this.productsDao.getById(id);
+        return product;
+    }
+    async insertRepo(element) {
+        const newProduct = await this.productsDao.add(element);
+        return newProduct;
+    }
+    async updateByIdRepo(id, updatedElement) {
+        const updatedProduct = await this.productsDao.updateById(id, updatedElement);
+        return updatedProduct;
+    }
+    async deleteByIdRepo(id) {
+        const deletedProducts = await this.productsDao.deleteById(id);
+        return deletedProducts;
+    }
+    async deleteManyRepo(filter) {
+        const deletedProducts = await this.productsDao.deleteMany(filter);
+        return deletedProducts;
+    }
+
+
     async getByIdWithQuotation(id) {
         const product = await this.productsDao.getById(id);
         const cotizaciones = {

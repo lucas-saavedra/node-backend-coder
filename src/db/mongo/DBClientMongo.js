@@ -13,10 +13,10 @@ class MongoClient extends DbClient {
         try {
             instance = await this.client.connect(connectToMongoDb('users'));
             this.connected = true;
-            console.log('Base de datos connectada, instancia: ', instance.connection.id);
+            //console.log('Base de datos connectada, instancia: ', instance.connection.id);
             return instance;
         } catch (error) {
-            throw new CustomError(500, 'error al conectarse a mongodb', error)
+            console.log(error);
         }
     }
     async disconnect() {

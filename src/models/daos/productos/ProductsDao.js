@@ -14,5 +14,8 @@ class ProductsDao {
     async deleteById(id) {
         throw new CustomError(500, "falta implementar deleteById")
     }
+    async deleteMany(filter) {
+        throw new CustomError(500, "falta implementar deleteMany")
+    }
 }
 export default ProductsDao;

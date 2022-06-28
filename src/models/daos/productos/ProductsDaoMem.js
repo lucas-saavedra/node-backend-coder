@@ -14,7 +14,7 @@ class ProductsDaoMem extends ProductsDao {
         const document = this.products.find(product => product.id === id);
         return document;
     }
-    async insert(element) {
+    async add(element) {
         this.products.push(element);
         return true;
     }

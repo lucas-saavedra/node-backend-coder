@@ -9,7 +9,7 @@ const args = yargs(process.argv.slice(2))
   })
   .default({
     port: 8080,
-    persistencia: 'mem'
+    persistencia: 'mongo'
   })
   .argv;
 
