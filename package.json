@@ -23,6 +23,8 @@
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^16.5.0",
     "mongoose": "^6.3.8",
     "yargs": "^17.5.1"
   },

@@ -8,5 +8,5 @@ const server = http.createServer(app);
 server.listen(PORT);
 
 server.on('listening', () => {
-    console.log('El servidor está escuchando en el puerto' + PORT);
+    console.log('El servidor está escuchando en el puerto => ' + PORT);
 });
