@@ -1,29 +1,26 @@
-import { React } from "../dep.ts";
+// @deno-types="https://deno.land/x/servest@v1.3.1/types/react/index.d.ts"
+import React from "https://dev.jspm.io/react@17.0.2/index.js";
 
-function App() {
-  const [colorList, setColorList] = React.useState([]);
-  const [color, setColor] = React.useState("");
-  const handleChange = (e) => {
-    setColor(e.target.value);
-  };
-
+function App(colorListAtt: string[]) {
   return (
     <>
       <div className="App">
-        <form method="POST" action='/' >
-          <label htmlFor="colorInput">Color</label>
-          <input  name="color" id="color" type="text" />
+        <form method="POST" action="/">
+          <label style={{ color: "white" }} htmlFor="colorInput">Color</label>
+          <input name="color" id="color" type="text" />
           <button type="submit">
             Submit
           </button>
         </form>
-        {colorList.map((val, index) => {
-          return (
-            <li style={{ "color": val }} key={index}>
-              {val}
-            </li>
-          );
-        })}
+        <ul>
+          {colorListAtt.map((val, index) => {
+            return (
+              <li style={{ "color": val }} key={index}>
+                {val}
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </>
   );

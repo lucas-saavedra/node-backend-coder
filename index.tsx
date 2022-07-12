@@ -1,85 +1,43 @@
-import { Application, Router } from "https://deno.land/x/oak@v7.3.0/mod.ts";
-import { React, ReactDOMServer } from "./dep.ts";
+import {
+  contentTypeFilter,
+  createApp,
+} from "https://deno.land/x/servest@v1.3.1/mod.ts";
+// @deno-types="https://deno.land/x/servest@v1.3.1/types/react/index.d.ts"
+import React from "https://dev.jspm.io/react@17.0.2/index.js";
+// @deno-types="https://deno.land/x/servest@v1.3.1/types/react-dom/server/index.d.ts"
+import ReactDOMServer from "https://dev.jspm.io/react-dom@17.0.2/server.js";
+
 import App from "./components/App.tsx";
 
 const PORT = Deno.env.get("PORT") || 8080;
-
-const app = new Application();
-const router = new Router();
-router.get("/", (ctx) => {
-  ctx.response.headers = new Headers({
-    "content-type": "text/html; charset=UTF-8",
-  });
-  ctx.response.body = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <title>Deno</title>
-    </head>
-    <body >
-        <div id="root">${ReactDOMServer.renderToString(<App />)}
-        </div>
-    </body>
-    </html>`;
-});
-router.post("/", async (ctx) => {
-  const color = await ctx.request.body().value;
-  console.log(JSON.parse(color));
-});
-
-app.use(router.routes());
-
-await app.listen({ port: +PORT });
-/* app.handle("/", async (req) => {
+const colorList: Array<string> = [];
+const app = createApp();
+app.post(
+  "/",
+  contentTypeFilter("application/x-www-form-urlencoded"),
+  async (req) => {
+    const bodyForm = await req.formData();
+    const color = bodyForm.value("color");
+    colorList.push(color);
+  },
+);
+app.handle("/", async (req) => {
   await req.respond({
     status: 200,
     headers: new Headers({
       "content-type": "text/html; charset=UTF-8",
     }),
-    body: `
-        <!DOCTYPE html>
-        <html lang="en">
+    body: ReactDOMServer.renderToString(
+      <html>
         <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-            <title>Deno</title>
+          <meta charSet="utf-8" />
+          <title>servest</title>
         </head>
-        <body >
-            <div id="root">${ReactDOMServer.renderToString(<App />)}
-            </div>
+        <body style={{ background: "black" }}>
+          {App(colorList)}
         </body>
-        </html>`,
+      </html>,
+    ),
   });
-}); */
-
-/* app.listen({ port: +PORT });
-
-const router = new Router();
-router.post("/", (context) => {
-  console.log(context.request.body);
 });
-router.get("/", (context) => {
-  context.response.body = `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-          <title>Deno</title>
-      </head>
-      <body >
-          <div id="root">${ReactDOMServer.renderToString(<App />)}
-          </div>
-      </body>
-      </html>`;
-});
-app.use(router.routes());
-app.use(router.allowedMethods());
-
 app.listen({ port: +PORT });
-console.log(`server is running on port: ${+PORT}`); */
